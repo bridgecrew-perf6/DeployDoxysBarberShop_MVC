@@ -1,0 +1,23 @@
+{
+    "name": "juanpablosoto/app-salon_php_mvc_js_sass_fin",
+    "description": "Prueba ejecucion",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "MVC\\" : "./",
+            "Controllers\\" : "./controllers",
+            "Model\\" : "./models",
+            "Classes\\" : "./classes"
+        }
+    },
+    "authors": [
+        {
+            "name": "juan23191",
+            "email": "juan_soto23191@elpoli.edu.co"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.5",
+        "vlucas/phpdotenv": "^5.4"
+    }
+}
