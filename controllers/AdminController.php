@@ -3,7 +3,7 @@
 namespace Controllers;
 
 use Model\AdminCita;
-use Model\Empleado;
+use Model\Usuario;
 use MVC\Router;
 
 class AdminController {
@@ -21,10 +21,13 @@ class AdminController {
 
         // Consultar la base de datos
         $consulta = "SELECT citas.id, citas.hora, CONCAT( usuarios.nombre, ' ', usuarios.apellido) as cliente, ";
-        $consulta .= " usuarios.email, usuarios.telefono, servicios.nombre as servicio, servicios.precio  ";
+        $consulta .= " usuarios.email, usuarios.telefono, servicios.nombre as servicio, servicios.precio,  ";
+        $consulta .= " CONCAT( empleados.nombre, ' ', empleados.apellido) as barbero";
         $consulta .= " FROM citas  ";
         $consulta .= " LEFT OUTER JOIN usuarios ";
         $consulta .= " ON citas.usuarioId=usuarios.id  ";
+        $consulta .= " LEFT OUTER JOIN empleados ";
+        $consulta .= " ON citas.empleadoId=empleados.id  ";
         $consulta .= " LEFT OUTER JOIN citasServicios ";
         $consulta .= " ON citasServicios.citaId=citas.id ";
         $consulta .= " LEFT OUTER JOIN servicios ";
@@ -41,42 +44,42 @@ class AdminController {
     }
 
     public static function nuevoUser(Router $router) {
-        $empleado = new Empleado;
+        session_start();
+
+        isAdmin();
+        $usuario = new Usuario;
 
         // Alertas vacias
         $alertas = [];
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $empleado->sincronizar($_POST);
-            $alertas = $empleado->validarNuevaCuenta();
+            $usuario->sincronizar($_POST);
+            $alertas = $usuario->validarNuevaCuenta();
 
             // Revisar que alerta este vacio
             if(empty($alertas)) {
                 // Verificar que el empleado no este registrado
-                $resultado = $empleado->existeUsuario();
+                $resultado = $usuario->existeUsuario();
 
                 if($resultado->num_rows) {
-                    $alertas = Empleado::getAlertas();
+                    $alertas = Usuario::getAlertas();
                 } else {
                     // Hashear el Password
-                    $empleado->hashPassword();
-
-                    // Generar un Token único
-                    $empleado->crearToken();
-
+                    $usuario->hashPassword();
+                    (int)$_POST[7];
                     // Crear el empleado
-                    $resultado = $empleado->guardar();
+                    $resultado = $usuario->guardar();
+
                     // debuguear($empleado);
                     if($resultado) {
-                        header('Location: /mensaje');
+                        header('Location: /admin');
                     }
                 }
             }
         }
         
-        $router->render('servicios/addUser', [
-            'empleado' => $empleado,
+        $router->render('admin/addUser', [
+            'usuario' => $usuario,
             'alertas' => $alertas
         ]);
     }
-
 }

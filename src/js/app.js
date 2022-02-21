@@ -24,7 +24,7 @@ function iniciarApp() {
     
     consultarAPIBarberos(); // Consulta la API en el backend de PHP
     consultarAPIServicios(); // Consulta la API en el backend de PHP
-    consultarAPIHoras();
+    //consultarAPIHoras();
 
     idCliente();
     nombreCliente(); // Añade el nombre del cliente al objeto de cita
@@ -142,52 +142,24 @@ async function consultarAPIServicios() {
     }
 }
 
-
+let click = 0;
 async function consultarAPIHoras() {
-    // alert('Se ha dado clic al botón!');
     try {
-        if(cita.barberos[0]['id'] === NULL){
-            const url = 'http://localhost:3000/api/horas'; //?empleadoId=' + cita.barberos[0]['id'] + '&fecha=' + cita.fecha;
-            console.log(url)
-            const resultado = await fetch(url);
-            const horas = await resultado.json();
-            // console.log(horas)
-            mostrarHoras(horas);
+        if(cita.barberos.length === 0 || cita.fecha == ""){
+            mostrarAlerta('Por favor seleccione Barbero y Fecha', 'error', '.formulario');
+        }else{
+            click = click + 1 ;
+            if(click === 1){
+                const url = 'http://localhost:3000/api/horas?empleadoId=' + cita.barberos[0]['id'] + '&fecha=' + cita.fecha;
+                const resultado = await fetch(url); 
+                const horas = await resultado.json();      
+                mostrarHoras(horas);
+            }
         }
     }catch{
         console.log(error);
     }
 }
-
-
-// async function consultarAPIHoras() {
-
-//     try {
-
-//         const url = 'http://localhost:3000/api/horas?empleadoId=' + cita.barberos + '&fecha=' + cita.fecha;
-//         console.log(url)
-//         const resultado = await fetch(url);
-//         const horas = await resultado.json();
-//         console.log(horas)
-//         mostrarHoras(horas);
-//         // const datos = new FormData();
-//         // datos.append('fecha', cita.fecha);
-//         // datos.append('empleadoId', cita.barberos);
-     
-//         // const url = 'http://localhost:3000/api/horas';
-//         // const resultado = await fetch(url, {
-//         //     method: 'POST',
-//         //     body: datos
-//         // });
-
-//         // const horas = await resultado.json();
-//         // console.log(horas);
-//         // // mostrarHoras(horas);
-    
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
 
 function mostrarBarberos(barberos) {
     barberos.forEach( barbero => {
@@ -370,20 +342,6 @@ function seleccionarFecha() {
     });
 }
 
-// function seleccionarHora() {
-//     const inputHora = document.querySelector('#hora');
-//     inputHora.addEventListener('input', function(e) {
-//         const horaCita = e.target.value;
-//         const hora = horaCita.split(":")[0];
-//         if(hora < 10 || hora > 21) {
-//             e.target.value = '';
-//             mostrarAlerta('Hora No Válida', 'error', '.formulario');
-//         } else {
-//             cita.hora = e.target.value;
-//         }
-//     });
-// }
-
 function mostrarAlerta(mensaje, tipo, elemento, desaparece = true) {
 
     // Previene que se generen más de 1 alerta
@@ -424,7 +382,6 @@ function mostrarResumen() {
 
         return;
     } 
-
     // Formatear el div de resumen
     const { nombre, fecha, horas, servicios, barberos} = cita;
 
@@ -487,9 +444,6 @@ function mostrarResumen() {
     const fechaCita = document.createElement('P');
     fechaCita.innerHTML = `<span>Fecha:</span> ${fechaFormateada}`;
 
-    // const horaCita = document.createElement('P');
-    // horaCita.innerHTML = `<span>Hora:</span> ${hora} Horas`;
-
     // Boton para Crear una cita
     const botonReservar = document.createElement('BUTTON');
     botonReservar.classList.add('boton');
@@ -498,19 +452,32 @@ function mostrarResumen() {
 
     resumen.appendChild(nombreCliente);
     resumen.appendChild(fechaCita);
-    // resumen.appendChild(horaCita);
+    horas.forEach(hora => {
+        const { id, valueHora} = hora;
+
+        const contenedorHora = document.createElement('DIV');
+        contenedorHora.classList.add('contenedor-hora');
+
+        const valorHoraAsig = document.createElement('P');
+        valorHoraAsig.innerHTML = `<span>Hora:</span> ${valueHora}`;
+
+        contenedorHora.appendChild(valorHoraAsig);
+        
+        resumen.appendChild(contenedorHora);
+    });
     resumen.appendChild(botonReservar);
 }
 
 async function reservarCita() {
-    
+    console.log(cita)
     const { nombre, fecha, horas, servicios, barberos, id } = cita;
     const idServicios = servicios.map( servicio => servicio.id );
     const idBarberos = barberos.map( barbero => barbero.id );
+    const valorHora = horas.map(hora => hora.valueHora)
     const datos = new FormData();
     
     datos.append('fecha', fecha);
-    datos.append('hora', horas);
+    datos.append('hora', valorHora);
     datos.append('usuarioId', id);
     datos.append('servicios', idServicios);
     datos.append('empleadoId', idBarberos);

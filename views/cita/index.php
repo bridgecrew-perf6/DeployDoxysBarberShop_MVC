@@ -37,9 +37,9 @@
 
                     <div class="campo">
                         <label for="fecha">Fecha</label>
-                        <input id="fecha" type="date" min="<?php echo date('Y-m-d', strtotime('+1 day')); ?>" />
+                        <input id="fecha" type="date" required min="<?php echo date('Y-m-d', strtotime('+1 day')); ?>" />
                     </div>
-                    <button id="disponiblidad" class="boton">Buscar Disponiblidad &raquo;</button>
+                    <input type="button" id="disponiblidad" class="boton" onclick="consultarAPIHoras()" value="Buscar Diponibilidad"/>
 
                     <div id="horas" class="listado-horas"></div>
                     <input type="hidden" id="id" value="<?php echo $id; ?>">

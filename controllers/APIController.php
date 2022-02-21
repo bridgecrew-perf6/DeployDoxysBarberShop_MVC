@@ -20,28 +20,21 @@ class APIController {
     }
 
     public static function horas() {
-        $horas = Horas::all();
-        echo json_encode($horas);
+        $empleadoId = s($_GET['empleadoId']);
+        $fecha = s($_GET['fecha']);
+        
+        $horaCitasBarbero = Cita::HoraCitas($empleadoId, $fecha);
+        $asignadas = array();
+        foreach($horaCitasBarbero as $hora) {
+            $encode = json_encode($hora);
+            $data = json_decode($encode);
+            $horasAsignadas = $data->hora;
+            array_push($asignadas,  $horasAsignadas);
+        }
+        
+        $valueHorasDispo = Horas::HoraCitasSinAsignar($asignadas);
+        echo json_encode($valueHorasDispo);
     }
-    // public static function horas() {
-
-    //     $respuesta = [
-    //         'datos' => $_POST
-    //     ];
-        
-    //     $horaCitasBarbero = Cita::HoraCitas($_POST['empleadoId'], $_POST['fecha']);
-    //     $asignadas = array();
-    //     foreach($horaCitasBarbero as $hora) {
-    //         $encode = json_encode($hora);
-    //         $data = json_decode($encode);
-    //         $horasAsignadas = $data->hora;
-    //         array_push($asignadas,  $horasAsignadas);
-    //     }
-        
-    //     $valueHorasDispo = Horas::HoraCitasSinAsignar($asignadas);
-        
-    //     echo json_encode($valueHorasDispo);
-    // }
 
     public static function guardar() {
         

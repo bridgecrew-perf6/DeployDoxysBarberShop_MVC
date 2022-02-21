@@ -69,7 +69,9 @@
         display: flex;
         justify-content: space-between;
     }
-
+    p{
+        color:v.$gris;
+    }
     .boton {
         margin: 0 0 1rem 0;
     }
@@ -177,21 +179,6 @@
         position: relative;
         bottom: 2.5rem;
     }
-
-    footer {
-        background: #1b2a4e;
-        min-height: 100px;;
-    }
-    footer p{
-        color:#f3f3f3;
-        text-align:center;
-    }
-    #iconos  i {
-        font-size: 26px;
-        padding: 0 8px;
-        color:#f3f3f3;
-    }
-
     
 }
 .contenedor-blog{
@@ -200,13 +187,115 @@
         min-height: 100vh;
     }
 
+    p{
+        color:v.$gris;
+    }
+
     width: 95%;
     margin: 0 auto;
     padding: 3rem 0;
 
-    .fakeimg {
-        background-image: url(../img/corte6.jpg);
-        width: 100%;
-        padding: 20px;
+    .fakeimgPpal {
+        background-image: url(../img/balsamoBlog.jpg);
+        width: 55%;
+        height: 300px;
     }
+
+    .fakeimgAuthor {
+        background-image: url(../img/andres.jpg);
+        width: 88%;
+        height: 310px;
+    }
+
+    .fakeimgfooter {
+        background-image: url(../img/balsamo.jpg);
+        width: 100%;
+        height: 250px;
+    }
+    
+
+    .imgLogo{
+        height: 7rem;
+        width: 6rem;
+        background-image: url(../img/logo-barber.png);
+        background-size: 5rem;
+        background-position: center center;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    /* Header/Blog Title */
+    .header {
+        padding: 3px;
+        font-size: 4px;
+        text-align: center;
+    }
+
+    /* Create two unequal columns that floats next to each other */
+    /* Left column */
+    .leftcolumn {
+        float: left;
+        width: 75%;
+    }
+
+    /* Right column */
+    .rightcolumn {
+        float: left;
+        width: 25%;
+        padding-left: 20px;
+    }
+
+    /* Add a card effect for articles */
+    .card {
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+
+    /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 800px) {
+
+        .leftcolumn,
+        .rightcolumn {
+            width: 100%;
+            padding: 0;
+        }
+    }
+}
+
+.footer {
+    width: 100%;
+    background-color: v.$negronegro;
+    .text-small {
+        font-size: 0.9rem;
+      }
+      
+      a {
+        color: inherit;
+        text-decoration: none;
+        transition: all 0.3s;
+      }
+      
+      a:hover, a:focus {
+        text-decoration: none;
+      }
+      
+      .form-control {
+        background: #212529;
+        border-color: #545454;
+      }
+      
+      .form-control:focus {
+        background: #212529;
+      }          
+    
 }
