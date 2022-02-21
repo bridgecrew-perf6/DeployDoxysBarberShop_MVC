@@ -17,14 +17,21 @@
             height: auto;
         }
     }
-
+    .imagenSupport{
+        height: 20rem;
+        background-image: url(../img/support.png);
+        background-size: cover;
+        background-position: center center;
+        @include m.tablet {
+            height: auto;
+        }
+        padding: 5rem;
+	}					  
     .app {
         width: 95%;
         margin: 0 auto;
         padding: 3rem 0;
-        @include m.tablet {
-            overflow: scroll;
-        }
+        color:#D4AF37;
     }
 }
 
@@ -38,14 +45,13 @@
     }
 
     .boton {
-        @include m.boton(v.$negro, v.$blanco);
+        @include m.boton(v.$negro,v.$blanco);
         margin: 0;
     }
 }
 
 .barra-servicios {
-    margin-bottom: v.$separacion;
-
+    margin-bottom: v.$separacion;		  
     @include m.tablet {
         display: flex;
         justify-content: space-between;
@@ -53,5 +59,154 @@
 
     .boton {
         margin: 0 0 1rem 0;
+		color: #ffff;
+    }						  
+}
+.contenedor-home{
+    margin-bottom: v.$separacion;
+    color:#D4AF37;
+    @include m.tablet {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .boton {
+        margin: 0 0 1rem 0;
+    }
+
+    @include m.tablet {
+        display: flex;        
+        min-height: 100vh;
+    }
+
+    .appHome {
+        width: 99%;
+        margin: 0 auto;
+        padding: 3rem 0;
+    }
+
+    .imgLogo{
+        height: 7rem;
+        width: 6rem;
+        background-image: url(../img/logo-barber.png);
+        background-size: 5rem;
+        background-position: center center;
+    }
+
+    .imagenHome {
+        height: 50rem;
+        background-image: url(../img/navbarBarberia.jpg);
+        background-size: cover;
+        background-position: center center;
+        position: relative;
+        bottom: 7rem;
+    }
+
+    .corte{
+        width: 17rem;
+        height:18rem;
+        background-image: url(../img/corte1.jpg);
+        background-size: cover;
+        position: relative;
+        left: 15rem;
+    }
+
+    .corte2{
+        width: 17rem;
+        height:18rem;
+        background-image: url(../img/corte2.jpg);
+        background-size: cover;
+        position: relative;
+        left: 15rem;
+    }
+
+    .corte3{
+        width: 17rem;
+        height:18rem;
+        background-image: url(../img/corte3.jpg);
+        background-size: cover;
+        position: relative;
+        left: 15rem;
+    }
+
+    .corte4{
+        width: 17rem;
+        height:18rem;
+        background-image: url(../img/corte6.jpg);
+        background-size: cover;
+        position: relative;
+        left: 15rem;
+    }
+
+    .home-courses{
+        width: 90%;
+        margin-left: 7rem;
+        color: #ffff;
+    }
+
+    .descripcion1{
+        position: relative;
+        left: 35rem;
+        bottom: 19rem;
+        width: 18rem;
+        height: 11rem;
+    }
+
+    h1{
+        color: #D4AF37;
+        position: relative;
+        bottom: 4rem;
+    }
+
+    h2{
+        position: relative;
+        right: 37rem;
+        top: 15rem;
+        color: #D4AF37;
+        font-size: 5rem;
+    }
+    
+    h3{
+        position: relative;
+        right: 42.5rem;
+        top: 11rem;
+        color: #D4AF37;
+        font-size: 2rem;
+    }
+    nav{
+        position: relative;
+        bottom: 2.5rem;
+    }
+
+    footer {
+        background: #1b2a4e;
+        min-height: 100px;;
+    }
+    footer p{
+        color:#f3f3f3;
+        text-align:center;
+    }
+    #iconos  i {
+        font-size: 26px;
+        padding: 0 8px;
+        color:#f3f3f3;
+    }
+
+    
+}
+.contenedor-blog{
+    @include m.tablet {
+        display: grid;
+        min-height: 100vh;
+    }
+
+    width: 95%;
+    margin: 0 auto;
+    padding: 3rem 0;
+
+    .fakeimg {
+        background-image: url(../img/corte6.jpg);
+        width: 100%;
+        padding: 20px;
     }
 }

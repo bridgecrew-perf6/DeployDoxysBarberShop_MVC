@@ -16,3 +16,18 @@
         text-align: center;
     }
 }
+
+.accionesExit {
+    margin-top: v.$separacion;
+    @include m.tablet {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    a {
+        color: v.$blanco;
+        display: block;
+        text-align: center;
+    }
+}

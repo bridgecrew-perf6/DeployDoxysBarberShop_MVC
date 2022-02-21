@@ -2,31 +2,35 @@
 
 namespace Model;
 
-class Usuario extends ActiveRecord {
+class Empleado extends ActiveRecord {
     // Base de datos
-    protected static $tabla = 'usuarios';
-    protected static $columnasDB = ['id', 'nombre', 'apellido', 'email', 'password', 'telefono', 'confirmado', 'token','admin'];
+    protected static $tabla = 'empleados';
+    protected static $columnasDB = ['id', 'rolId', 'nombre', 'apellido', 'password', 'email', 'telefono','direccion','horarioempleadoId', 'confirmado', 'token'];
 
     public $id;
+    public $rolId;
     public $nombre;
     public $apellido;
-    public $email;
     public $password;
+    public $email;
     public $telefono;
+    public $direccion;
+    public $horarioempleadoId;
     public $confirmado;
-    public $admin;
     public $token;
 
     public function __construct($args = []) {
         $this->id = $args['id'] ?? null;
+        $this->rolId = $args['rolId'] ?? null;
         $this->nombre = $args['nombre'] ?? '';
         $this->apellido = $args['apellido'] ?? '';
-        $this->email = $args['email'] ?? '';
         $this->password = $args['password'] ?? '';
+        $this->email = $args['email'] ?? '';
         $this->telefono = $args['telefono'] ?? '';
+        $this->direccion = $args['direccion'] ?? '';
+        $this->horarioempleadoId = $args['horarioempleadoId'] ?? '';
         $this->confirmado = $args['confirmado'] ?? '0';
         $this->token = $args['token'] ?? '';
-        $this->admin = $args['admin'] ?? '0';
     }
 
     // Mensajes de validación para la creación de una cuenta

@@ -5,6 +5,8 @@ namespace Controllers;
 use Model\Cita;
 use Model\CitaServicio;
 use Model\Servicio;
+use Model\Empleado;
+use Model\Horas;
 
 class APIController {
     public static function index() {
@@ -12,14 +14,48 @@ class APIController {
         echo json_encode($servicios);
     }
 
+    public static function barberos() {
+        $barberos = Empleado::all();
+        echo json_encode($barberos);
+    }
+
+    public static function horas() {
+        $horas = Horas::all();
+        echo json_encode($horas);
+    }
+    // public static function horas() {
+
+    //     $respuesta = [
+    //         'datos' => $_POST
+    //     ];
+        
+    //     $horaCitasBarbero = Cita::HoraCitas($_POST['empleadoId'], $_POST['fecha']);
+    //     $asignadas = array();
+    //     foreach($horaCitasBarbero as $hora) {
+    //         $encode = json_encode($hora);
+    //         $data = json_decode($encode);
+    //         $horasAsignadas = $data->hora;
+    //         array_push($asignadas,  $horasAsignadas);
+    //     }
+        
+    //     $valueHorasDispo = Horas::HoraCitasSinAsignar($asignadas);
+        
+    //     echo json_encode($valueHorasDispo);
+    // }
+
     public static function guardar() {
         
+        $respuesta = [
+            'datos' => $_POST
+        ];
+       // echo json_encode(['resultado1' => $respuesta]);
+
         // Almacena la Cita y devuelve el ID
         $cita = new Cita($_POST);
         $resultado = $cita->guardar();
+        
 
         $id = $resultado['id'];
-
         // Almacena la Cita y el Servicio
 
         // Almacena los Servicios con el ID de la Cita

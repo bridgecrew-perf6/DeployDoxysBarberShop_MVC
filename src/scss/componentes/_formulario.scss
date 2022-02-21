@@ -18,10 +18,11 @@
         border: none;
         padding: calc(v.$separacion / 4);
         border-radius: 1rem;
+        color: v.$negronegro;
 
         &:disabled {
             background-color: lighten(v.$negro, 30%);
-            color: v.$blanco;
+            color: v.$negronegro;
             cursor: not-allowed;
         }
     }

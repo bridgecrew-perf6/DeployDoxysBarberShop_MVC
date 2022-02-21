@@ -102,6 +102,20 @@ class ActiveRecord {
         return $resultado;
     }
 
+    // Todos los registros horas
+    public static function HoraCitas($empleadoId, $fecha) {
+        $query = "SELECT hora FROM " . static::$tabla ." WHERE empleadoId = ${empleadoId} AND fecha = '${fecha}'";
+        $resultado = self::consultarSQL($query);
+        return $resultado;
+    }
+
+    public static function HoraCitasSinAsignar($horas) {
+        $array = implode("','", $horas);
+        $query = "SELECT * FROM " . static::$tabla ." WHERE valueHora NOT IN ('".$array."')";
+        $resultado = self::consultarSQL($query);
+        return $resultado;
+    }
+
     // Todos los registros
     public static function all() {
         $query = "SELECT * FROM " . static::$tabla;
@@ -149,6 +163,7 @@ class ActiveRecord {
         $query .= join("', '", array_values($atributos));
         $query .= " ') ";
         
+        //echo json_encode(['query' => $query]);
         // Resultado de la consulta
         $resultado = self::$db->query($query);
         return [

@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Model\AdminCita;
+use Model\Empleado;
 use MVC\Router;
 
 class AdminController {
@@ -38,4 +39,44 @@ class AdminController {
             'fecha' => $fecha
         ]);
     }
+
+    public static function nuevoUser(Router $router) {
+        $empleado = new Empleado;
+
+        // Alertas vacias
+        $alertas = [];
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $empleado->sincronizar($_POST);
+            $alertas = $empleado->validarNuevaCuenta();
+
+            // Revisar que alerta este vacio
+            if(empty($alertas)) {
+                // Verificar que el empleado no este registrado
+                $resultado = $empleado->existeUsuario();
+
+                if($resultado->num_rows) {
+                    $alertas = Empleado::getAlertas();
+                } else {
+                    // Hashear el Password
+                    $empleado->hashPassword();
+
+                    // Generar un Token único
+                    $empleado->crearToken();
+
+                    // Crear el empleado
+                    $resultado = $empleado->guardar();
+                    // debuguear($empleado);
+                    if($resultado) {
+                        header('Location: /mensaje');
+                    }
+                }
+            }
+        }
+        
+        $router->render('servicios/addUser', [
+            'empleado' => $empleado,
+            'alertas' => $alertas
+        ]);
+    }
+
 }
